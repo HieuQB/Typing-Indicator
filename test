@@ -1,0 +1,28 @@
+var voucher_codes = require('voucher-code-generator');
+var crypto = require('crypto');
+
+var promotionCode = {
+	prefix: "test",
+	postfix:"2018",
+	length: 10,
+	sum: 50,
+	value: 30,
+	started_at:"1522048525",
+	expired_at:"1522048525",
+	isMulti:1,
+	maxUser:10
+};
+
+var codeGenerates = voucher_codes.generate({
+    length: 8,
+    count: 100,
+	charset: voucher_codes.charset("alphanumeric"),
+	prefix: "promo-",
+	postfix: "-2018"
+});
+
+function promotionCode(prefix,postfix,length,nameEvent,count,value,){
+  
+}
+
+console.log(codeGenerates); //=> return array code
