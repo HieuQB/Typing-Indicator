@@ -26,3 +26,295 @@ function promotionCode(prefix,postfix,length,nameEvent,count,value,){
 }
 
 console.log(codeGenerates); //=> return array code
+
+package com.spreadi.tippin.customViews;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.spreadi.tippin.R;
+import com.spreadi.tippin.helpers.DrawableHelper;
+import com.spreadi.tippin.helpers.FontHelper;
+
+import butterknife.BindView;
+
+/**
+ * @author Created by dat-pt on 2017/12/29.
+ */
+
+public class SearchBoxView extends LinearLayoutCompat {
+    //region Constant
+    //endregion
+
+    //region UI
+    ImageView imvSearchIcon;
+    ImageView imvCancelSearch;
+
+    EditText edtSearchView;
+
+    LinearLayout lltSearchIcon;
+    //endregion
+
+    //region Field
+    private boolean middleHint;
+    private int borderColor;
+    private LinearLayoutCompat.LayoutParams lltMiddleParams;
+    private LinearLayoutCompat.LayoutParams lltStartParams;
+    private boolean cancelable;
+    private int searchIconID;
+    private boolean alwaysLeft;
+    //endregion
+
+    //region Getter/Setter
+
+    public ImageView getImvCancelSearch() {
+        return imvCancelSearch;
+    }
+
+    public void setImvCancelSearch(ImageView imvCancelSearch) {
+        this.imvCancelSearch = imvCancelSearch;
+    }
+
+    public EditText getEdtSearchView() {
+        return edtSearchView;
+    }
+
+    public void setEdtSearchView(EditText edtSearchView) {
+        this.edtSearchView = edtSearchView;
+    }
+
+    public boolean getMiddleHintStatus() {
+        return middleHint;
+    }
+
+    public void setMiddleHint(boolean middleHint) {
+        this.middleHint = middleHint;
+        invalidate();
+    }
+    //endregion
+
+    public SearchBoxView(Context context, AttributeSet atts) {
+        super(context, atts);
+        initialize(context, atts);
+    }
+
+    public SearchBoxView(Context context) {
+        super(context, null);
+        initialize(context, null);
+    }
+
+    private void initialize(Context context, AttributeSet atts) {
+        lltMiddleParams = new LinearLayoutCompat.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        lltMiddleParams.gravity = Gravity.END;
+        lltStartParams = new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        lltStartParams.gravity = Gravity.END;
+        TypedArray attrList = context.obtainStyledAttributes(atts, R.styleable.SearchBoxView);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.search_box_component, this, true);
+
+        lltSearchIcon = (LinearLayout) getChildAt(0);
+        imvSearchIcon = (ImageView) lltSearchIcon.getChildAt(0);
+        edtSearchView = (EditText) getChildAt(1);
+        imvCancelSearch = (ImageView) getChildAt(2);
+
+        edtSearchView.setTypeface(FontHelper.getInstance().getTypeface(getContext(), FontHelper.FONT_HIRAKAKU_W3));
+
+        edtSearchView.setHint(attrList.getString(R.styleable.SearchBoxView_hint));
+        edtSearchView.setTextSize(TypedValue.COMPLEX_UNIT_SP, attrList.getFloat(R.styleable.SearchBoxView_text_size, 14));
+        edtSearchView.setTextColor(attrList.getColor(R.styleable.SearchBoxView_text_color, ResourcesCompat.getColor(getResources(), R.color.colorWhite, null)));
+        edtSearchView.setHintTextColor(attrList.getColor(R.styleable.SearchBoxView_hint_color, ResourcesCompat.getColor(getResources(), R.color.colorWhite, null)));
+        int backgroundColor = attrList.getColor(R.styleable.SearchBoxView_background_box, ResourcesCompat.getColor(getResources(), R.color.editText_search, null));
+        alwaysLeft = attrList.getBoolean(R.styleable.SearchBoxView_always_left,false);
+
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(ResourcesCompat.getColor(getResources(), R.color.all_colorTransparent, null));
+        setBackground(background);
+
+        searchIconID = attrList.getResourceId(R.styleable.SearchBoxView_left_icon, R.drawable.search);
+
+        middleHint = (attrList.getBoolean(R.styleable.SearchBoxView_middle_hint, true));
+        cancelable = attrList.getBoolean(R.styleable.SearchBoxView_search_cancelable, true);
+
+        borderColor = backgroundColor;
+        attrList.recycle();
+        updateView();
+
+        edtSearchView.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    edtSearchView.requestFocus();
+                    edtSearchView.setCursorVisible(true);
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(edtSearchView, InputMethodManager.SHOW_IMPLICIT);
+                    middleHint = false;
+                    if (!edtSearchView.getText().toString().isEmpty()) {
+                        checkCancelable(true);
+                        middleHint = false;
+                    } else {
+                        checkCancelable(false);
+                    }
+                } else {
+                    if (!edtSearchView.getText().toString().isEmpty()) {
+                        checkCancelable(true);
+                        middleHint = false;
+                    } else {
+                        middleHint = true;
+                    }
+                }
+            }
+        });
+
+        edtSearchView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtSearchView.setCursorVisible(true);
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(edtSearchView, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+        imvCancelSearch.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtSearchView.setText("");
+                edtSearchView.setCursorVisible(true);
+                showCancelable(false);
+                edtSearchView.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(edtSearchView, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+        lltSearchIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtSearchView.setCursorVisible(true);
+                edtSearchView.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(edtSearchView, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+    }
+
+    //region Override
+    @Override
+    protected void onDraw(Canvas canvas) {
+        updateView();
+        GradientDrawable mBackground = (GradientDrawable) getBackground();
+        mBackground.setColor(borderColor);
+        super.onDraw(canvas);
+    }
+
+    private void updateView() {
+        GradientDrawable mBackground = (GradientDrawable) getBackground();
+        mBackground.setStroke(1, borderColor);
+        mBackground.setCornerRadius(getHeight() / 2);
+        imvSearchIcon.setImageResource(searchIconID);
+
+        if (middleHint && !alwaysLeft) {
+            checkCancelable(false);
+            edtSearchView.setPadding(0, 0, 0, 0);
+            lltSearchIcon.setLayoutParams(lltMiddleParams);
+        } else {
+            edtSearchView.setPadding((int) getResources().getDimension(R.dimen.margin_searchBar_searchIcon), 0, 0, 0);
+            lltSearchIcon.setLayoutParams(lltStartParams);
+        }
+    }
+
+    //region Private Method
+    private void checkCancelable(boolean isShown) {
+        if (cancelable && isShown) {
+            imvCancelSearch.setVisibility(VISIBLE);
+        } else {
+            imvCancelSearch.setVisibility(GONE);
+        }
+    }
+    //endregion
+
+    //region Public Method
+    public void setText(String text) {
+        edtSearchView.setText(text);
+        if (!"".equals(text))
+            middleHint = false;
+        invalidate();
+    }
+
+    public void showCancelable(boolean cancelState) {
+        checkCancelable(cancelState);
+        invalidate();
+    }
+    //endregion
+}
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|center_vertical"
+        android:gravity="end|center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_searchBar_searchIcon"
+            android:layout_marginEnd="@dimen/marginRight_searchBar_searchIcon"
+            android:layout_marginStart="@dimen/marginRight_searchBar_buttonCancel"
+            android:layout_marginTop="@dimen/margin_searchBar_searchIcon"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/all_imageView_contentDescription"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtSearchView"
+        android:layout_width="@dimen/size_searchBar_buttonCancel"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/all_transparent"
+        android:cursorVisible="true"
+        android:inputType="textNoSuggestions"
+        android:labelFor="@id/edtSearchView"
+        android:lines="1"
+        android:singleLine="true"
+        android:textColor="@color/editText_search_text"
+        android:textColorHint="@color/editText_search_hintText"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/fontSize_14" />
+
+    <ImageView
+        android:layout_width="@dimen/size_searchBar_buttonCancel"
+        android:layout_height="@dimen/size_searchBar_buttonCancel"
+        android:layout_gravity="end|center"
+        android:layout_marginBottom="@dimen/margin_searchBar_buttonCancel"
+        android:layout_marginEnd="@dimen/marginRight_searchBar_buttonCancel"
+        android:layout_marginTop="@dimen/margin_searchBar_buttonCancel"
+        android:adjustViewBounds="true"
+        android:background="@color/all_transparent"
+        android:contentDescription="@string/all_imageView_contentDescription"
+        android:scaleType="centerInside"
+        android:src="@drawable/cancel"
+        android:visibility="gone" />
+
+</merge>
