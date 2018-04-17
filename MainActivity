@@ -1,0 +1,30 @@
+package com.example.hieu_nm.democustomviewtopbar;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
+
+import com.example.hieu_nm.democustomviewtopbar.dialog.ErrorMessageDialogFragment;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+        setContentView(R.layout.activity_main);
+
+        TextView tvShowDialog = findViewById(R.id.tvShowError);
+        tvShowDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ErrorMessageDialogFragment errorDialog = new ErrorMessageDialogFragment();
+                errorDialog.setError("Lỗi gì gì đó viết đại đi");
+                errorDialog.show(getSupportFragmentManager(), MainActivity.class.getName());
+            }
+        });
+    }
+}
