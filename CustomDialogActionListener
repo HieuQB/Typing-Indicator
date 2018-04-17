@@ -1,0 +1,10 @@
+package com.example.hieu_nm.democustomviewtopbar.dialog;
+
+/**
+ * Created by duy-tp on 8/21/2017.
+ */
+
+public interface CustomDialogActionListener {
+    void dialogCancel();
+    void dialogPerformAction();
+}
