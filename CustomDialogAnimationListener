@@ -1,0 +1,10 @@
+package com.example.hieu_nm.democustomviewtopbar.dialog;
+
+/**
+ * Created by duy-tp on 8/25/2017.
+ */
+
+public interface CustomDialogAnimationListener {
+    void onDialogEndShowingAnimation();
+    void onDialogEndHidingAnimation();
+}
