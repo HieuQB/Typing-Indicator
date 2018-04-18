@@ -1,0 +1,19 @@
+public class MessageEditPeopleDialog extends BaseListDialog {
+    String[] stringArray;
+
+    public MessageEditPeopleDialog() {
+        super();
+        setView(R.layout.dialog_select_list);
+        setHasAction(false);
+    }
+
+    public static MessageEditPeopleDialog newInstance() {
+        return new MessageEditPeopleDialog();
+    }
+
+    @Override
+    public ArrayAdapter getAdapter() {
+        stringArray = getContext().getResources().getStringArray(R.array.dialog_message_edit_user);
+        return DialogListAdapter.createAdapterDefaultTypeface(getContext(), stringArray, stringArray);
+    }
+}
