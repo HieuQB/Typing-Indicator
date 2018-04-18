@@ -1,0 +1,57 @@
+public class DeleteConversationDialogFragment extends BaseCustomDialogFragment {
+    private TextView txvLink;
+
+    public DeleteConversationDialogFragment() {
+        super();
+        setView(R.layout.dialog_question);
+        setHasAction(true);
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View mainView = super.onCreateView(inflater, container, savedInstanceState);
+        setActionName(getString(R.string.dialogQuestion_deleteChatRoom_delete));
+
+        txvLink = (TextView) mainView.findViewById(R.id.tvQuestion);
+        txvLink.setTypeface(FontHelper.getInstance().getTypeface(getContext(), FontHelper.FONT_HIRAKAKU_W3));
+        txvLink.setText(getString(R.string.dialogQuestion_deleteChatRoom_question));
+
+        setActionName(getString(R.string.dialogQuestion_deleteChatRoom_delete));
+        return mainView;
+    }
+}
+
+
+
+
+
+
+final DeleteConversationDialogFragment deleteConversationDialogFragment = new DeleteConversationDialogFragment();
+            deleteConversationDialogFragment.setDialogActionListener(new CustomDialogActionListener() {
+                @Override
+                public void dialogCancel() {
+                }
+
+                @Override
+                public void dialogPerformAction() {
+                    deleteConversationDialogFragment.dismissDialog();
+                    final ConversationAdapter adapter = (ConversationAdapter) rcvMessage.getAdapter();
+                    if (adapter != null) {
+                        adapter.removeItemAtPosition(position);
+                    }
+                    listGroupChanel.get(position).hide(false, new GroupChannel.GroupChannelHideHandler() {
+                        @Override
+                        public void onResult(SendBirdException e) {
+                            Log.d("Delete Chanel", "Success");
+                        }
+                    });
+                }
+            });
+            deleteConversationDialogFragment.show(getFragmentManager(), DeleteConversationDialogFragment.class.getName());
