@@ -55,3 +55,25 @@ final DeleteConversationDialogFragment deleteConversationDialogFragment = new De
                 }
             });
             deleteConversationDialogFragment.show(getFragmentManager(), DeleteConversationDialogFragment.class.getName());
+
+
+
+
+
+//dialog_question 
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/margin_dialog_content"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_dialogQuestion"
+        android:layout_marginBottom="@dimen/margin_dialogQuestion"
+        android:textAlignment="center"
+        android:lineSpacingMultiplier="1.3"
+        android:textSize="@dimen/fontSize_16"/>
+</LinearLayout>
