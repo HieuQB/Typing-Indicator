@@ -1,0 +1,40 @@
+// khai  báo
+BaseListDialog dialog;
+
+// cách xài
+   dialog = MessageUserSettingDialog.newInstance();
+   dialog.setOnItemClickListener(userSettingItemClick);
+   showDialog(dialog, "userSetting");
+   
+   
+   //userSettingItemClick
+    private BaseListDialog.OnItemClickListener userSettingItemClick = new BaseListDialog.OnItemClickListener() {
+        @Override
+        public void onItemClick(Object item, int position) {
+            if (doubleClick) {
+                doubleClick = false;
+                if (position == 0) {
+                    final ReportProfileDialogFragment reportProfileDialogFragment = new ReportProfileDialogFragment();
+                    reportProfileDialogFragment.setReportProfileListener(new ReportProfileDialogFragment.ReportProfileListener() {
+                        @Override
+                        public void getListReport(SparseIntArray listReportId) {
+                            dialog.dismiss();
+                            if (listReportId.size() != 0) {
+                                if (((BaseActivity) getActivity()).isNetworkAvailable()) {
+                                    reportProfile(listReportId);
+                                } else {
+                                    ((BaseActivity) getActivity()).showErrorToast(messageErrorNoInternet);
+                                }
+                            }
+                        }
+                    });
+                    reportProfileDialogFragment.show(getFragmentManager(), Constants.DIALOG_TAG_REPORT);
+                } else if (position == 1) {
+                    profileViewModel.blockUser(((BaseActivity) getContext()).getLoggedUserID(),
+                            profileID, //
+                            ((BaseActivity) getContext()).getAccessSessionToken());
+                    dialog.dismiss();
+                }
+            }
+        }
+    };
