@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dialog_profile_image">
+        <item>@string/dialogProfile_takePicture</item>
+        <item>@string/dialogProfile_cameraRoll</item>
+    </string-array>
+
+    <string-array name="dialog_post_article">
+        <item>@string/dialogPost_report</item>
+        <item>@string/dialogPost_block</item>
+    </string-array>
+
+    <string-array name="dialog_edit_post">
+        <item>@string/dialogPost_edit</item>
+        <item>@string/dialogPost_delete</item>
+    </string-array>
+
+    <string-array name="dialog_post_report">
+        <item>@string/dialogPost_report_obscene</item>
+        <item>@string/dialogPost_report_violence</item>
+        <item>@string/dialogPost_report_libel</item>
+        <item>@string/dialogPost_report_negativeReligionAndPolitic</item>
+        <item>@string/dialogPost_report_violenceSelfHarmBehavior</item>
+        <item>@string/dialogPost_report_spam</item>
+    </string-array>
+
+    <string-array name="dialog_group_message_edit_user">
+        <item>@string/dialogGroupMessage_editUser</item>
+    </string-array>
+
+    <string-array name="dialog_cancel_article">
+        <item>@string/dialogCancelArticle_Save</item>
+        <item>@string/dialogCancelArticle_Delete</item>
+    </string-array>
+
+    <string-array name="dialog_message_edit_user">
+        <item>@string/dialogMessageEditUser_edit</item>
+    </string-array>
+
+    <string-array name="dialog_user_setting">
+        <item>@string/dialogUser_report</item>
+        <item>@string/dialogPost_block</item>
+    </string-array>
+</resources>
