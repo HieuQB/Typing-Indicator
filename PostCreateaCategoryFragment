@@ -1,0 +1,201 @@
+package com.spreadi.tippin.views.dialog;
+
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.spreadi.tippin.R;
+import com.spreadi.tippin.helpers.CategoryHelper;
+
+import com.spreadi.tippin.customViews.CustomRoundedTextView;
+import com.spreadi.tippin.interfaces.CustomDialogActionListener;
+import com.spreadi.tippin.views.dialog.base.BaseCustomDialogFragment;
+import com.spreadi.tippin.views.post.PostEdit.PostEditActivity;
+import com.spreadi.tippin.views.post.postCreate.PostCreateActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by dat-pt on 2017/09/05.
+ */
+
+public class PostCreateCategoryFragment extends BaseCustomDialogFragment implements View.OnClickListener {
+    private TextView tvListCategoryTitle;
+    private CustomRoundedTextView ctvFoodDrink, ctvTravel, ctvBusiness, ctvEntertainment,
+            ctvFashion, ctvTechnology, ctvHealth, ctvFinance, ctvEducation, ctvIdea;
+    private List<Integer> listCategory;
+    private List<Integer> checkedCategoryList;
+    private List<CustomRoundedTextView> listTextView = new ArrayList<>();
+    private String className;
+
+    public PostCreateCategoryFragment() {
+        super();
+        setView(R.layout.dialog_category_list);
+        setHasAction(true);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View mainView = super.onCreateView(inflater, container, savedInstanceState);
+
+        className = getArguments().getString("ClassName");
+
+        setActionName(getResources().getString(R.string.listCategoryDialog_setUp));
+        setDialogActionListener(new CustomDialogActionListener() {
+            @Override
+            public void dialogCancel() {
+                if (className.equals("Edit")) {
+                    PostEditActivity activity = (PostEditActivity) getActivity();
+                    activity.setList(checkedCategoryList);
+                } else if (className.equals("Create")) {
+                    PostCreateActivity activity = (PostCreateActivity) getActivity();
+                    activity.setList(checkedCategoryList);
+                }
+            }
+
+            @Override
+            public void dialogPerformAction() {
+                if (className.equals("Edit")) {
+                    PostEditActivity activity = (PostEditActivity) getActivity();
+                    activity.setList(listCategory);
+                    activity.showCategory();
+                } else if (className.equals("Create")) {
+                    PostCreateActivity activity = (PostCreateActivity) getActivity();
+                    activity.setList(listCategory);
+                    activity.showCategory();
+                }
+                dismissDialog();
+            }
+        });
+        setValue(mainView);
+        setFont();
+        showChecked();
+        return mainView;
+    }
+
+    private void setFont() {
+        Typeface kakuW3 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/hiragino-kaku-gothic-pro-w3.otf");
+        Typeface quicksandB = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
+
+        ctvFoodDrink.setTypeface(kakuW3);
+        ctvTravel.setTypeface(kakuW3);
+        ctvBusiness.setTypeface(kakuW3);
+        ctvEntertainment.setTypeface(kakuW3);
+        ctvFashion.setTypeface(kakuW3);
+        ctvTechnology.setTypeface(kakuW3);
+        ctvHealth.setTypeface(kakuW3);
+        ctvFinance.setTypeface(kakuW3);
+        ctvEducation.setTypeface(kakuW3);
+        ctvIdea.setTypeface(kakuW3);
+        tvListCategoryTitle.setTypeface(quicksandB);
+    }
+
+    private void setValue(View mainView) {
+        ctvFoodDrink = (CustomRoundedTextView) mainView.findViewById(R.id.ctvFoodDrink);
+        ctvTravel = (CustomRoundedTextView) mainView.findViewById(R.id.ctvTravel);
+        ctvBusiness = (CustomRoundedTextView) mainView.findViewById(R.id.ctvBusiness);
+        ctvEducation = (CustomRoundedTextView) mainView.findViewById(R.id.ctvEducation);
+        ctvEntertainment = (CustomRoundedTextView) mainView.findViewById(R.id.ctvEntertainment);
+        ctvFashion = (CustomRoundedTextView) mainView.findViewById(R.id.ctvFashion);
+        ctvFinance = (CustomRoundedTextView) mainView.findViewById(R.id.ctvFinance);
+        ctvIdea = (CustomRoundedTextView) mainView.findViewById(R.id.ctvIdea);
+        ctvTechnology = (CustomRoundedTextView) mainView.findViewById(R.id.ctvTechnology);
+        ctvHealth = (CustomRoundedTextView) mainView.findViewById(R.id.ctvHealth);
+
+        tvListCategoryTitle = (TextView) mainView.findViewById(R.id.tvListCategoryTitle);
+
+        listTextView.add(ctvBusiness);
+        listTextView.add(ctvTravel);
+        listTextView.add(ctvFoodDrink);
+        listTextView.add(ctvEducation);
+        listTextView.add(ctvEntertainment);
+        listTextView.add(ctvFashion);
+        listTextView.add(ctvFinance);
+        listTextView.add(ctvIdea);
+        listTextView.add(ctvTechnology);
+        listTextView.add(ctvHealth);
+
+        if (className.equals("Edit")) {
+            PostEditActivity activity = (PostEditActivity) getActivity();
+            checkedCategoryList = activity.getList();
+        } else if (className.equals("Create")) {
+            PostCreateActivity activity = (PostCreateActivity) getActivity();
+            checkedCategoryList = activity.getList();
+        }
+        listCategory = new ArrayList<>(checkedCategoryList);
+
+        ctvEducation.setOnClickListener(this);
+        ctvHealth.setOnClickListener(this);
+        ctvBusiness.setOnClickListener(this);
+        ctvTechnology.setOnClickListener(this);
+        ctvIdea.setOnClickListener(this);
+        ctvFashion.setOnClickListener(this);
+        ctvEntertainment.setOnClickListener(this);
+        ctvFinance.setOnClickListener(this);
+        ctvFoodDrink.setOnClickListener(this);
+        ctvTravel.setOnClickListener(this);
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ctvFoodDrink:
+                addCategory(ctvFoodDrink);
+                break;
+            case R.id.ctvTravel:
+                addCategory(ctvTravel);
+                break;
+            case R.id.ctvBusiness:
+                addCategory(ctvBusiness);
+                break;
+            case R.id.ctvEntertainment:
+                addCategory(ctvEntertainment);
+                break;
+            case R.id.ctvFashion:
+                addCategory(ctvFashion);
+                break;
+            case R.id.ctvTechnology:
+                addCategory(ctvTechnology);
+                break;
+            case R.id.ctvHealth:
+                addCategory(ctvHealth);
+                break;
+            case R.id.ctvFinance:
+                addCategory(ctvFinance);
+                break;
+            case R.id.ctvEducation:
+                addCategory(ctvEducation);
+                break;
+            case R.id.ctvIdea:
+                addCategory(ctvIdea);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void addCategory(CustomRoundedTextView category) {
+        if (category.getChecked()) {
+            category.setChecked(false);
+            listCategory.remove((Object) CategoryHelper.getInstance(getContext()).getKey(category.getText().toString()));
+        } else if (listCategory.size() < 3) {
+            category.setChecked(true);
+            listCategory.add(CategoryHelper.getInstance(getContext()).getKey(category.getText().toString()));
+        }
+    }
+
+    private void showChecked() {
+        for (CustomRoundedTextView obj : listTextView) {
+            for (Integer keyCategory : checkedCategoryList)
+                if (CategoryHelper.getInstance(getContext()).getKey(obj.getText().toString()) == keyCategory) {
+                    obj.setChecked(true);
+                }
+        }
+    }
+
+}
