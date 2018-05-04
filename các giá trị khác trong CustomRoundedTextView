@@ -1,0 +1,16 @@
+
+//R.styleable.CustomRoundedTextView
+
+   <declare-styleable name="CustomRoundedTextView">
+        <attr name="border_color" />
+        <attr name="border_size" />
+        <attr name="is_select_category" format="boolean" />
+        <attr name="is_category" format="boolean" />
+        <attr name="is_checked" format="boolean" />
+    </declare-styleable>
+    
+       <color name="all_colorWhite">#FFFFFF</color>
+    <color name="all_colorLightningYellow">#F0A42C</color>
+        <color name="borderColor_listCategoryDialog_unchecked">#95989A</color>
+    <color name="backgroundColor_listCategoryDialog_unchecked">#FFFFFF</color>
+        <color name="all_colorOil_Text">#333333</color>
