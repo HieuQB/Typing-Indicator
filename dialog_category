@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:id="@+id/tvListCategoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="最大3つまで"
+        android:textColor="@color/all_colorRed_Text"
+        android:textSize="20sp"
+        android:layout_margin="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvFoodDrink"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_food_drink"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true" />
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvTravel"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_travel"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvBusiness"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_business"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true" />
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvEntertainment"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_entertainment"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvFashion"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_fashion"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true" />
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvTechnology"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_technology"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvHealth"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_health"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true" />
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvFinance"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_finance"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp">
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvEducation"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_education"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true" />
+
+        <com.spreadi.tippin.customViews.CustomRoundedTextView
+            android:id="@+id/ctvIdea"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/listCategoryDialog_idea"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            app:is_category="true"/>
+    </LinearLayout>
+</LinearLayout>
