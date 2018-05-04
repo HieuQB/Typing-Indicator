@@ -1,0 +1,138 @@
+package com.spreadi.tippin.customViews;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v7.widget.AppCompatTextView;
+import android.util.AttributeSet;
+
+import com.spreadi.tippin.R;
+import com.spreadi.tippin.helpers.DrawableHelper;
+
+/**
+ * Created by dat-pt on 2017/09/04.
+ */
+
+public class CustomRoundedTextView extends AppCompatTextView {
+
+    private int borderColor = getResources().getColor(R.color.all_colorTransparent);
+    private int borderSize = 0;
+    private boolean isSelectCategory;
+    private Drawable delCategory;
+    private boolean isChecked, isCategory;
+
+    public CustomRoundedTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        TypedArray attrList = context.obtainStyledAttributes(attrs, R.styleable.CustomRoundedTextView);
+        ColorStateList borderColor = attrList.getColorStateList(R.styleable.CustomRoundedTextView_border_color);
+        int borderSize = attrList.getDimensionPixelSize(R.styleable.CustomRoundedTextView_border_size, 0);
+        isSelectCategory = attrList.getBoolean(R.styleable.CustomRoundedTextView_is_select_category, false);
+        isCategory = attrList.getBoolean(R.styleable.CustomRoundedTextView_is_category, false);
+        isChecked = attrList.getBoolean(R.styleable.CustomRoundedTextView_is_checked, false);
+
+        if (borderColor != null) {
+            this.borderColor = borderColor.getDefaultColor();
+        }
+
+        this.borderSize = borderSize;
+
+        Drawable bg = getBackground();
+        int color = getResources().getColor(R.color.all_colorWhite);
+
+        if (bg instanceof ColorDrawable) {
+            color = ((ColorDrawable) bg).getColor();
+        }
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(color);
+        setBackground(background);
+
+        attrList.recycle();
+        updateView();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        updateView();
+        super.onDraw(canvas);
+
+    }
+
+    private void updateView() {
+        GradientDrawable background = (GradientDrawable) getBackground();
+
+        if (isCategory) {
+            if (isChecked) {
+                this.borderSize = 0;
+                setTextColor(getResources().getColor(R.color.all_colorWhite));
+                background.setColor(getResources().getColor(R.color.all_colorLightningYellow));
+                setBackground(background);
+            }
+            else {
+                this.borderSize = (int) getResources().getDimension(R.dimen.line_height);
+                this.borderColor = getResources().getColor(R.color.borderColor_listCategoryDialog_unchecked);
+                setTextColor(getResources().getColor(R.color.all_colorOil_Text));
+                background.setColor(getResources().getColor(R.color.backgroundColor_listCategoryDialog_unchecked));
+                setBackground(background);
+            }
+        }
+
+        background.setStroke(this.borderSize, this.borderColor);
+        background.setCornerRadius(getHeight() / 2);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        int leftPadding, rightPadding;
+        leftPadding = getPaddingLeft();
+        if (isSelectCategory) {
+            delCategory = DrawableHelper.scale(getContext(), R.drawable.all_wrong, getHeight() * 4 / 5);
+            setCompoundDrawables(null, null, delCategory, null);
+            setCompoundDrawablePadding(getHeight() / 5);
+            rightPadding = getHeight() / 10;
+            setPadding(leftPadding, 0, rightPadding, 0);
+        }
+    }
+
+    public int getBorderSize() {
+        return this.borderSize;
+    }
+
+    public void setBorderSize(int borderSize) {
+        this.borderSize = borderSize;
+    }
+
+    public int getBorderColor() {
+        return this.borderColor;
+    }
+
+    public void setBorderColor(int borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    public boolean isSelectCategory() {
+        return this.isSelectCategory;
+    }
+
+    public void setSelectCategory(boolean isSelectCategory) {
+        this.isSelectCategory = isSelectCategory;
+    }
+
+    public void setChecked(boolean checked){
+        this.isChecked = checked;
+    }
+
+    public boolean getChecked(){
+        return isChecked;
+    }
+}
