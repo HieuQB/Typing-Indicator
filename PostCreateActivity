@@ -1,0 +1,21 @@
+    public void showCategory() {
+        for (int i = 0; i < listTextView.size(); i++) {
+            listTextView.get(i).setVisibility(View.GONE);
+        }
+        for (int i = 0; i < listCategory.size(); i++) {
+            listTextView.get(i).setText(
+                    CategoryHelper.getInstance(getBaseContext()).getName(listCategory.get(i)));
+            listTextView.get(i).setVisibility(View.VISIBLE);
+        }
+    }
+    
+    //cách xài
+        @SuppressWarnings("unused")
+    @OnClick(R.id.ctvAddCategory)
+    public void ctvAddCategoryOnCLickListener() {
+        PostCreateCategoryFragment postCreateCategory = new PostCreateCategoryFragment();
+        Bundle myBundle = new Bundle();
+        myBundle.putString("ClassName", "Create");
+        postCreateCategory.setArguments(myBundle);
+        postCreateCategory.show(getSupportFragmentManager(), "postCreateCategory");
+    }
