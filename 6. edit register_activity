@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:src="@color/appColor"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <ImageView
+            android:id="@+id/ic_camera"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_camera" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:singleLine="true"
+            android:paddingStart="55dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_edt_login"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:id="@+id/edt_full_name"
+            android:layout_width="match_parent"
+            android:hint="Tên của bạn"
+            android:textColor="#333"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="35dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:singleLine="true"
+            android:paddingStart="55dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_edt_login"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:hint="Email"
+            android:textColor="#333"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="35dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:singleLine="true"
+            android:paddingStart="55dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_edt_login"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:hint="Mật khẩu"
+            android:textColor="#333"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="35dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:singleLine="true"
+            android:paddingStart="55dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_edt_login"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:id="@+id/edt_cofirm_password"
+            android:layout_width="match_parent"
+            android:hint="Xác nhận mật khẩu"
+            android:textColor="#333"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="35dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        style="@style/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="18dp"
+        android:text="Đăng Ký"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+</LinearLayout>
