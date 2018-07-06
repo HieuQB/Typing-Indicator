@@ -1,0 +1,48 @@
+<?php
+require_once('Net/SMTP.php');
+require_once('Net/Socket.php');
+require_once('Mail.php');
+require_once('Mail/mime.php');
+
+$from = 'Sender <hieuit275@gmail.com>';
+$to = 'Receiver <14520288@gm.uit.edu.vn>';
+$subject = 'Sent from PHP on my machine';
+
+$text = 'This is a message I sent from <a href="http://www.php.net/">PHP</a> '
+      . 'using the PEAR Mail package and SMTP through Gmail. Enjoy!';
+
+$message = new Mail_mime();
+$message->setTXTBody(strip_tags($text)); // for plain-text
+$message->setHTMLBody($text);
+$body = $message->get();
+
+$host = 'smtp.gmail.com';
+$port = 587; //According to Google you need to use 465 or 587
+$username = 'hieuit275@gmail.com';
+$password = '14520288';
+
+$headers = array('From' => $from,
+    'To' => $to,
+    'Subject' => $subject);
+
+$smtp = Mail::factory('smtp',
+    array(
+        'host' => $host,
+        'port' => $port,
+        'auth' => true,
+        'username' => $username,
+        'password' => $password));
+echo "send1";
+$attachmentheaders = $message->headers($headers);
+echo "send2";
+$mail = $smtp->send($to, $attachmentheaders, $body);
+
+if (PEAR::isError($mail)) {
+    echo $mail->getMessage();
+} else {
+    echo "Message sent successfully!";
+}
+
+echo "\n";
+
+?>
